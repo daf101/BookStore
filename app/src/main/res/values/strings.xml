@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Book Store</string>
+
+    <!--Dummy Value Strings-->
+    <string name="dummy_product_name">The best book</string>
+    <string name="dummy_price">399</string>
+    <string name="dummy_quantity">50</string>
+    <string name="dummy_supplier_name">Best Supply</string>
+    <string name="dummy_supplier_phone_number">(08) 9399 0812</string>
+
+    <!--MainActivity Strings-->
+    <string name="heading_books_table_contains">The books table contains </string>
+    <string name="strBooks">books</string>
+
+    <!--MainActivity Options Menu Strings-->
+    <string name="insert_dummy_data">Insert Sample Data</string>
+
+</resources>

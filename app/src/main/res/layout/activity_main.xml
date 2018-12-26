@@ -1,35 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/inventory_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="18sp"
-        tools:text="Book Store" />
-
-    <RelativeLayout
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/new_product_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="16dp"
-            android:scaleType="center"
-            android:src="@drawable/bookflat"
-            app:fabCustomSize="84dp"
-            app:fabSize="auto"
-            app:maxImageSize="68dp" />
+    </ListView>
 
-    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/new_product_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:scaleType="center"
+        android:src="@drawable/bookflat"
+        app:fabCustomSize="84dp"
+        app:fabSize="auto"
+        app:maxImageSize="68dp" />
 
-</LinearLayout>
+</RelativeLayout>

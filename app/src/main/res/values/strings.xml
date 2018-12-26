@@ -23,4 +23,6 @@
     <string name="supplier_phone_number">Supplier Phone Number</string>
     <string name="all_fields_require_input">All fields require input</string>
 
+    <!--list_item strings:-->
+    <string name="price_space">Price:\u0020</string>
 </resources>

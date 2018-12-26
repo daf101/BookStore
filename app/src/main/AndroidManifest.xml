@@ -17,6 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditorActivity"></activity>
+        <provider
+            android:name=".data.BookProvider"
+            android:authorities="com.dafakamatt.bookstore"
+            android:exported="false" />
     </application>
 
 </manifest>

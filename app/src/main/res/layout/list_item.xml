@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for a single list item in the list of books -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/list_item_padding"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/product_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="12 Rules for life" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/price_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price_space" />
+
+            <TextView
+                android:id="@+id/price_dollar_value_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="13.99" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/stock_on_hand_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Stock On Hand: " />
+
+            <TextView
+                android:id="@+id/stock_on_hand_quantity_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="58" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/sale_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Sale"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/contact_supplier_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Contact Supplier"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</LinearLayout>

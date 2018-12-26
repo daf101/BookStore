@@ -75,8 +75,10 @@ public class EditorActivity extends AppCompatActivity
         values.put(BookEntry.COLUMN_SUPPLIER_NAME,supplierName);
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER,supplierPhoneNumber);
 
+        Uri newUri = null;
+
         try{
-            Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI,values);
+            newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
         }
         catch(Exception e) {
             Log.e("saveProductLine","Error Saving Product Line",e);

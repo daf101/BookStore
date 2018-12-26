@@ -15,4 +15,12 @@
     <!--MainActivity Options Menu Strings-->
     <string name="insert_dummy_data">Insert Sample Data</string>
 
+    <!--Editor Activity Strings-->
+    <string name="product_name">Product Name</string>
+    <string name="price">Price</string>
+    <string name="stock_quantity">Stock</string>
+    <string name="supplier_name">Supplier Name</string>
+    <string name="supplier_phone_number">Supplier Phone Number</string>
+    <string name="all_fields_require_input">All fields require input</string>
+
 </resources>

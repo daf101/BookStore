@@ -1,13 +1,16 @@
 package com.dafakamatt.bookstore;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.dafakamatt.bookstore.data.BookDbHelper;
@@ -24,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
 
         // Calling our BookDBHelper that will create a Database, if required
         mDbHelper = new BookDbHelper(this);
+
+        FloatingActionButton newProductFab = findViewById(R.id.new_product_fab);
+        newProductFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // Display the table in a single TextView to validate the process.
         displayBooksTable();

@@ -21,6 +21,7 @@
             android:parentActivityName=".MainActivity">
 
         </activity>
+
         <provider
             android:name=".data.BookProvider"
             android:authorities="com.dafakamatt.bookstore"

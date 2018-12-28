@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/empty_bookshelf_image_view"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"

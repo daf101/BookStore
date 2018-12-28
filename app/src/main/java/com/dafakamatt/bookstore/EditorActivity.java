@@ -75,6 +75,7 @@ public class EditorActivity extends AppCompatActivity
         mSupplierPhoneNumberEditText = findViewById(R.id.supplier_phone_number_edit_text);
         Button mStockDecrement = findViewById(R.id.stock_decrement_button);
         Button mStockIncrement = findViewById(R.id.stock_increment_button);
+        Button phoneSupplier = findViewById(R.id.contact_supplier_edit_button);
 
         // Hooking up Decrement Button and applying onClickListener:
         mStockDecrement.setText(DECREMENT_BUTTON_TEXT);
@@ -94,6 +95,17 @@ public class EditorActivity extends AppCompatActivity
             }
         });
 
+        phoneSupplier.setText(getString(R.string.phone_supplier));
+        phoneSupplier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String supplierPhoneNumber = mSupplierPhoneNumberEditText.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                String phoneNumberUri = "tel:" + supplierPhoneNumber;
+                intent.setData(Uri.parse(phoneNumberUri));
+                startActivity(intent);
+            }
+        });
     }
 
     // Decrementing the number shown in mStockQuantityEditText
@@ -138,9 +150,9 @@ public class EditorActivity extends AppCompatActivity
 
         // Checking each field contains valid info, otherwise, display toast asking
         // user to check their fields:
-        if(TextUtils.isEmpty(productName) || TextUtils.isEmpty(price) || TextUtils.isEmpty(stockQuantity) ||
+        if (TextUtils.isEmpty(productName) || TextUtils.isEmpty(price) || TextUtils.isEmpty(stockQuantity) ||
                 TextUtils.isEmpty(supplierName) || TextUtils.isEmpty(supplierPhoneNumber)) {
-            Toast.makeText(this,getString(R.string.all_fields_are_mandatory),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.all_fields_are_mandatory), Toast.LENGTH_SHORT).show();
             return;
         }
 

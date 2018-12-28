@@ -15,6 +15,8 @@
 
         <TextView
             android:id="@+id/product_name_text_view"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="12 Rules for life" />
@@ -22,11 +24,11 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            Andy Lau
             <TextView
                 android:id="@+id/price_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="@string/price_space" />
 
             <TextView
@@ -45,6 +47,7 @@
             <TextView
                 android:id="@+id/stock_on_hand_text_view"
                 android:text="@string/stock_quantity"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="Stock On Hand: " />
@@ -64,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="3">
 
         <Button
             android:id="@+id/sale_button"

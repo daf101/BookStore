@@ -1,18 +1,22 @@
 package com.dafakamatt.bookstore;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.dafakamatt.bookstore.data.BookDbHelper;
@@ -33,11 +37,21 @@ public class MainActivity extends AppCompatActivity
         // Calling our BookDBHelper that will create a Database, if required
         mDbHelper = new BookDbHelper(this);
 
+        // Setting up our ListView showing our book product lines:
         ListView bookListView = findViewById(R.id.list);
-
-        mCursorAdaptor = new BookCursorAdaptor(this,null);
-
+        mCursorAdaptor = new BookCursorAdaptor(this, null);
         bookListView.setAdapter(mCursorAdaptor);
+        // When user clicks a book item, we start the editor activity in a "Edit" mode
+        //
+        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, EditorActivity.class);
+                Uri currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, id);
+                intent.setData(currentBookUri);
+                startActivity(intent);
+            }
+        });
 
         // Initializing loader:
         getLoaderManager().initLoader(BOOK_LOADER, null, this);
@@ -101,7 +115,9 @@ public class MainActivity extends AppCompatActivity
                 BookEntry._ID,
                 BookEntry.COLUMN_PRODUCT_NAME,
                 BookEntry.COLUMN_PRICE,
-                BookEntry.COLUMN_QUANTITY
+                BookEntry.COLUMN_QUANTITY,
+                BookEntry.COLUMN_SUPPLIER_NAME,
+                BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER
         };
 
         switch (loaderId) {

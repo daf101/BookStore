@@ -36,13 +36,47 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] strings, String s, String[] strings1, String s1) {
-        return null;
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+                        String sortOrder) {
+        // Getting readable version of the database:
+        SQLiteDatabase database = mDbHelper.getReadableDatabase();
+
+        // This cursor will hold the result of our query:
+        Cursor cursor = null;
+
+
+        int match = sUriMatcher.match(uri);
+        switch (match) {
+            case BOOKS:
+                cursor = database.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+
+            case BOOKS_ID:
+                selection = BookEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+
+                cursor = database.query(BookEntry.TABLE_NAME, projection, selection, selectionArgs,
+                        null, null, sortOrder);
+                break;
+            default:
+                throw new IllegalArgumentException("Cannot query unknown URI " + uri);
+        }
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return cursor;
     }
 
     @Override
     public String getType(Uri uri) {
-        return null;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case BOOKS:
+                return BookEntry.CONTENT_LIST_TYPE;
+            case BOOKS_ID:
+                return BookEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 
     @Override
@@ -51,7 +85,7 @@ public class BookProvider extends ContentProvider {
         // Inserting new book into the Database. See helper methods underneath
         // the overridden methods below:
         final int match = sUriMatcher.match(uri);
-        switch(match) {
+        switch (match) {
             case BOOKS:
                 return insertBook(uri, contentValues);
             default:
@@ -65,8 +99,19 @@ public class BookProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String selection,
+                      String[] selectionArgs) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case BOOKS_ID:
+                selection = BookEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateBook(uri,contentValues,selection,selectionArgs);
+
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
+
     }
 
     // Helper method that's called by Overridden Insert() method:
@@ -89,7 +134,66 @@ public class BookProvider extends ContentProvider {
         // Inserting the data:
         long id = db.insert(BookEntry.TABLE_NAME, null, values);
 
+        // Notify all listeners that the data has changed for the book content uri:
+        getContext().getContentResolver().notifyChange(uri, null);
+
         // Checking if data insertion was successful:
-        return ContentUris.withAppendedId(uri,id);
+        return ContentUris.withAppendedId(uri, id);
+    }
+
+    private int updateBook (Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        if (values.containsKey(BookEntry.COLUMN_PRODUCT_NAME)) {
+            String name = values.getAsString(BookEntry.COLUMN_PRODUCT_NAME);
+            if (name == null) {
+                throw new IllegalArgumentException("Product Requires a Name");
+            }
+        }
+
+        if (values.containsKey(BookEntry.COLUMN_PRICE)) {
+            String price = values.getAsString(BookEntry.COLUMN_PRICE);
+            if (price == null) {
+                throw new IllegalArgumentException("Product requires a price value");
+            }
+        }
+
+        if (values.containsKey(BookEntry.COLUMN_QUANTITY)) {
+            Integer quantity = values.getAsInteger(BookEntry.COLUMN_QUANTITY);
+            if (quantity != null && quantity < 0 ) {
+                throw new IllegalArgumentException("Book Produce Line requires valid quantity");
+            }
+        }
+
+        if (values.containsKey(BookEntry.COLUMN_SUPPLIER_NAME)) {
+            String supplierName = values.getAsString(BookEntry.COLUMN_SUPPLIER_NAME);
+            if (supplierName == null) {
+                throw new IllegalArgumentException("Product requires valid supplier name");
+            }
+        }
+
+        if (values.containsKey(BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER)) {
+            String supplierPhoneNumber = values.getAsString(BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER);
+            if (supplierPhoneNumber == null) {
+                throw new IllegalArgumentException("Product requires valid supplier telephone number");
+            }
+        }
+
+        // If there's no values to update, bail out:
+        if (values.size() == 0) {
+            return values.size();
+        }
+
+        // Otherwise, get writable database instance and update data:
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int rowsUpdated = database.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        // If 1 or more rows are updated, then notify all listeners of the change:
+        if (rowsUpdated > 0) {
+            getContext().getContentResolver().notifyChange(uri,null);
+        }
+
+        // Return number of affected rows by the change:
+        return rowsUpdated;
+
     }
 }

@@ -11,17 +11,24 @@
     <!--MainActivity Strings-->
     <string name="heading_books_table_contains">The books table contains </string>
     <string name="strBooks">books</string>
+    <string name="sale">Sale</string>
+    <string name="contact_supplier">Contact Supplier</string>
 
     <!--MainActivity Options Menu Strings-->
     <string name="insert_dummy_data">Insert Sample Data</string>
 
     <!--Editor Activity Strings-->
+    <string name="editor_title_new_book">Create New Book Product Line</string>
+    <string name="editor_title_edit_existing">Update Existing Product Line</string>
     <string name="product_name">Product Name</string>
     <string name="price">Price</string>
-    <string name="stock_quantity">Stock</string>
+    <string name="stock_quantity">Stock:\u0020</string>
     <string name="supplier_name">Supplier Name</string>
     <string name="supplier_phone_number">Supplier Phone Number</string>
+
     <string name="all_fields_require_input">All fields require input</string>
+    <string name="error_saving_product_line">Error saving product line</string>
+    <string name="product_line_saved_successfully">Added product line successfully:\u0020</string>
 
     <!--list_item strings:-->
     <string name="price_space">Price:\u0020</string>

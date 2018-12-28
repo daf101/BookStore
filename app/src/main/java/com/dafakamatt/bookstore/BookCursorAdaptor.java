@@ -1,13 +1,11 @@
 package com.dafakamatt.bookstore;
 
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.provider.UserDictionary;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +14,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import com.dafakamatt.bookstore.data.BookDbHelper;
-import com.dafakamatt.bookstore.data.BooksContract;
 import com.dafakamatt.bookstore.data.BooksContract.BookEntry;
-
-import java.util.Locale;
 
 public class BookCursorAdaptor extends CursorAdapter {
 

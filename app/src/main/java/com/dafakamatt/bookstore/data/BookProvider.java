@@ -35,6 +35,7 @@ public class BookProvider extends ContentProvider {
         return true;
     }
 
+    // Methods to perform queries throughout the app:
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
@@ -42,7 +43,7 @@ public class BookProvider extends ContentProvider {
         SQLiteDatabase database = mDbHelper.getReadableDatabase();
 
         // This cursor will hold the result of our query:
-        Cursor cursor = null;
+        Cursor cursor;
 
 
         int match = sUriMatcher.match(uri);
@@ -66,6 +67,7 @@ public class BookProvider extends ContentProvider {
         return cursor;
     }
 
+    // Supported Types:
     @Override
     public String getType(Uri uri) {
         final int match = sUriMatcher.match(uri);
@@ -79,6 +81,7 @@ public class BookProvider extends ContentProvider {
         }
     }
 
+    // Method to insert data into the DB:
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
 
@@ -93,11 +96,37 @@ public class BookProvider extends ContentProvider {
         }
     }
 
+    // Method to delete data within the app:
     @Override
-    public int delete(Uri uri, String s, String[] strings) {
-        return 0;
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        //  Get writable instance of Database:
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        int rowsDeleted;
+
+        final int match = sUriMatcher.match(uri);
+
+        switch (match) {
+            case BOOKS_ID:
+                // Delete a single row indicated by ID within URI:
+                selection = BookEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+
+                rowsDeleted = database.delete(BookEntry.TABLE_NAME,selection,selectionArgs);
+                break;
+
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
+
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsDeleted;
     }
 
+    // Method to modify existing DB entries in the app
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection,
                       String[] selectionArgs) {
@@ -140,7 +169,7 @@ public class BookProvider extends ContentProvider {
         // Checking if data insertion was successful:
         return ContentUris.withAppendedId(uri, id);
     }
-
+    // Helper method that's called by Overridden update() method:
     private int updateBook (Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         if (values.containsKey(BookEntry.COLUMN_PRODUCT_NAME)) {
             String name = values.getAsString(BookEntry.COLUMN_PRODUCT_NAME);

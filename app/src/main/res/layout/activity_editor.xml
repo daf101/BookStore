@@ -18,14 +18,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/price"
+        android:inputType="number"
         tools:text="Price" />
 
-    <EditText
-        android:id="@+id/stock_quantity_edit_text"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/stock_quantity"
-        tools:text="Stock Quantity" />
+        android:layout_gravity="left"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/stock_decrement_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            tools:text="-" />
+
+        <EditText
+            android:id="@+id/stock_quantity_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/qty"
+            android:inputType="number"
+            tools:text="Stock Quantity" />
+
+        <Button
+            android:id="@+id/stock_increment_button"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            tools:text="+" />
+
+    </LinearLayout>
 
     <EditText
         android:id="@+id/supplier_name_edit_text"
@@ -39,21 +61,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/supplier_phone_number"
-        tools:text="Supplier Phone Number" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/editor_save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            tools:text="Save" />
-
-    </RelativeLayout>
+        tools:text="Supplier Phone Number"
+        android:inputType="number"/>
 </LinearLayout>

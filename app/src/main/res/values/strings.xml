@@ -13,22 +13,33 @@
     <string name="strBooks">books</string>
     <string name="sale">Sale</string>
     <string name="contact_supplier">Contact Supplier</string>
+    <string name="no_books_added_yet">No books yet!</string>
+    <string name="no_books_subtitle">Tap the book icon to add some products</string>
 
     <!--MainActivity Options Menu Strings-->
     <string name="insert_dummy_data">Insert Sample Data</string>
 
     <!--Editor Activity Strings-->
-    <string name="editor_title_new_book">Create New Book Product Line</string>
-    <string name="editor_title_edit_existing">Update Existing Product Line</string>
+    <string name="editor_title_new_book">Create New Product</string>
+    <string name="editor_title_edit_existing">Update Existing Product</string>
     <string name="product_name">Product Name</string>
     <string name="price">Price</string>
+    <string name="qty">Qty</string>
     <string name="stock_quantity">Stock:\u0020</string>
+    <string name="stock_quantity_cant_be_less_than_zero">Stock quantity cannot be less than 0!</string>
     <string name="supplier_name">Supplier Name</string>
     <string name="supplier_phone_number">Supplier Phone Number</string>
+    <string name="all_fields_are_mandatory">All fields are mandatory</string>
 
     <string name="all_fields_require_input">All fields require input</string>
     <string name="error_saving_product_line">Error saving product line</string>
     <string name="product_line_saved_successfully">Added product line successfully:\u0020</string>
+    <string name="action_delete">Delete Product</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="delete_alert">Delete this product?</string>
+    <string name="delete_error">Error deleting product</string>
+    <string name="delete_product_confirm">Product deleted</string>
 
     <!--list_item strings:-->
     <string name="price_space">Price:\u0020</string>

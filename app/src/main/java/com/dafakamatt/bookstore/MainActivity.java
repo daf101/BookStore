@@ -2,31 +2,27 @@ package com.dafakamatt.bookstore;
 
 import android.app.LoaderManager;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
-import com.dafakamatt.bookstore.data.BookDbHelper;
 import com.dafakamatt.bookstore.data.BooksContract.BookEntry;
 
 public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    // Assigning a book loader ID constant:
     private static final int BOOK_LOADER = 0;
-    private BookDbHelper mDbHelper;
+
+    // Creating custom cursor adaptor object:
     BookCursorAdaptor mCursorAdaptor;
 
     @Override
@@ -34,15 +30,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Calling our BookDBHelper that will create a Database, if required
-        mDbHelper = new BookDbHelper(this);
-
-        // Setting up our ListView showing our book product lines:
+        // Setting up our ListView showing our book product lines
+        // and applying a custom cursor adaptor:
         ListView bookListView = findViewById(R.id.list);
         mCursorAdaptor = new BookCursorAdaptor(this, null);
         bookListView.setAdapter(mCursorAdaptor);
-        // When user clicks a book item, we start the editor activity in a "Edit" mode
-        //
+
+        // When user clicks a book item, we start the editor activity in a "Edit" mode:
         bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -52,6 +46,10 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        // Creating empty view for when there's no list items:
+        View emptyView = findViewById(R.id.empty_view);
+        bookListView.setEmptyView(emptyView);
 
         // Initializing loader:
         getLoaderManager().initLoader(BOOK_LOADER, null, this);
@@ -69,57 +67,19 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    // Method to insert sample data to validate DB functionality:
-    private void insertDummyData() {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-        ContentValues dummyValues = new ContentValues();
-        dummyValues.put(BookEntry.COLUMN_PRODUCT_NAME, getString(R.string.dummy_product_name));
-        dummyValues.put(BookEntry.COLUMN_PRICE, getString(R.string.dummy_price));
-        // Sample quantity is stored in strings.xml. Converting to int:
-        String strQuantity = getString(R.string.dummy_quantity);
-        dummyValues.put(BookEntry.COLUMN_QUANTITY, Integer.parseInt(strQuantity));
-
-        // Adding remaining values:
-        dummyValues.put(BookEntry.COLUMN_SUPPLIER_NAME, getString(R.string.dummy_supplier_name));
-        dummyValues.put(BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER, getString(R.string.dummy_supplier_phone_number));
-
-        // Inserting new row:
-        db.insert(BookEntry.TABLE_NAME, null, dummyValues);
-
-    }
-
-    // Created options menu to insert the dummy data. Why not considering we just learned how to do it? :)
-    // Overriding the onCreateOptionsMenu to inflate the menu_catalog layout:
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_catalog, menu);
-        return true;
-    }
-
-    // Overriding the onOptionsItemSelected method to call insertDummyData() when needed:
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.main_activity_option_item_insert_dummy_data:
-                insertDummyData();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
+        // Defining column projection for required product fields here:
         String[] columnProjection = {
                 BookEntry._ID,
                 BookEntry.COLUMN_PRODUCT_NAME,
                 BookEntry.COLUMN_PRICE,
                 BookEntry.COLUMN_QUANTITY,
-                BookEntry.COLUMN_SUPPLIER_NAME,
                 BookEntry.COLUMN_SUPPLIER_PHONE_NUMBER
         };
 
+        // We only need to make one call to SQL via our Cursor Loader:
         switch (loaderId) {
             case BOOK_LOADER:
                 return new CursorLoader(
